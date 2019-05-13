@@ -1,0 +1,35 @@
+一、为什么需要package?
+1.为了解决类之间的重名问题。
+2.为了便于管理类：合适的类位于合适的包！
+二、package怎么用?
+通常是类的第一句非注释性语句。
+三、JDK中的主要包
+java.lang
+包含一些Java语言的核心类， 如String、 Math、 Integer、 System和Thread，提供常用功能。
+java.awt
+包含了构成抽象窗口工具集（abstract window toolkits）的多个类，这些类被用来构建和管理应用
+程序的图形用户界面(GUI)。
+java.net
+包含执行与网络相关的操作的类。
+java.io
+包含能提供多种输入/输出功能的类。
+java.util
+包含一些实用工具类，如定义系统特性、使用与日期日历相关的函数
+
+
+四、为什么需要import?
+如果不使用import，我们如果用到其他包的类时都需要加上包名+类名（java.util.Date）代码量太大，不利于编写和维护。通过import可以导入其他包下面的类，从而可以在本类中直接通过类名来调用。
+五、import怎么使用?
+import java.util.Date;
+import java.util.*; //导入该包下所有的类。会降低编译速度，但不会降低运行速度。
+注意要点：
+java会默认导入java.lang包下所有的类， 因此这些类我们可以直接使用。
+如果导入两个同名的类， 只能用包名+类名来显示调用相关类：
+java.util.Date date = new java.util.Date()
+
+六、静态导入
+静态导入的作用： 用于导入指定类的静态属性，JDK5.0后增加！
+如何使用：
+1.import static java.lang.Math.*;//导入Math类的所有静态属性
+2.import static java.lang.Math.PI;//导入Math类的PI属性
+3.然后， 我们可以在程序中直接使用： System.out.println(PI);
