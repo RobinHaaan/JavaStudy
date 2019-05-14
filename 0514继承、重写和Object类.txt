@@ -1,0 +1,44 @@
+一、继承：
+1.使用extends关键字
+2.Java中只有单继承，没有C++中的多继承
+3.Java的接口可以多继承，类只有单继承
+4.子类继承父类，可以得到父类的全部属性和方法（除了父类的构造方法），但不一定能直接访问（如，父类的私有属性和方法）
+5.如果定义一个类时，没用调用extends，则它的父类是java.lang.Object
+
+二、instanceof二元运算符
+左边放对象，右边放类。当对象是右面类或子类所创建的对象的时候，返回true;否则返回false.
+
+三、方法的重写/覆盖override
+方法的重写需要符合下面三个要点：
+1."=="，方法名、形参列表相同
+2."<="，返回值类型和声明异常类型，子类小于等于父类。
+3.">="，访问权限，子类大于父类。
+
+四、Object类
+Object类时所有Java类的根基类，也就意味着所有的Java对象都拥有Object类的属性和方法
+toString()方法重写
+"=="代表比较双方是否相同。如果是基本类型则表示值相等，如果是引用类型则表示地址相等即是同一个对象。
+equals方法，它的逻辑是“对象内容相等”，在Object中默认就是使用"=="来比较，所以基本都要重写equals方法，来实现它的逻辑，如String类、Date类等等
+
+五、贴一段String中equals的源码，此处展示了instanceof二元运算符的使用、equals的重写
+public boolean equals(Object anObject) {
+	if (this == anObject) {
+		return true;
+	}
+	if (anObject instanceof String) {
+		String anotherString = (String)anObject;
+		int n = value.length;
+		if (n == anotherString.value.length) {
+			char v1[] = value;
+			char v2[] = anotherString.value;
+			int i = 0;
+			while (n-- != 0) {
+				if (v1[i] != v2[i])
+					return false;
+				i++;
+			}
+			return true;
+		}
+	}
+	return false;
+}
