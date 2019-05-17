@@ -1,0 +1,56 @@
+一、多态
+多态指的是同一个方法调用、由于对象不同可能会有不同的行为。现实生活中，同一个方法，具体实现会完全不同。
+二、多态的要点
+1.多态是方法的多态，不是属性的多态(多态与属性无关_
+2.多态的存在要有三个必要条件：继承，方法重写，父类引用指向子类对象。
+3.父类引用指向子类对象后，用该父类引用调用子类重写的方法，此时多态就出现了。
+三、多态发生的示例代码
+public class TestPolym {
+	public static void main(String[] args){
+		Animal a = new Animal();
+		animalCry(a);
+		
+		Dog d = new Dog();
+		animalCry(d);//此处因为animalCry方法形参为Animal，父类引用指向子类对象
+		
+		//父类引用指向子类对象
+		Animal d2 = new Dog();
+		animalCry(d2);
+		
+		//父类引用指向子类对象
+		Animal c = new Cat();
+		animalCry(c);
+	}
+	
+	static void animalCry(Animal a){
+		a.shout();
+	}
+}
+
+class Animal{
+	public void shout(){
+		System.out.println("叫一声！");
+	}
+}
+
+//继承
+class Dog extends Animal{
+	//方法重写
+	public void shout(){
+		System.out.println("汪汪汪！");
+	}
+}
+
+//继承
+class Cat extends Animal{
+	//方法重写
+	public void shout(){
+		System.out.println("喵喵喵！");
+	}
+}
+
+
+四、对象的转型
+1.父类引用指向子类对象，我们称这个过程为向上转型，属于自动类型转换。
+2.向上转型后的父类引用变量只能调用它编译类型的方法，不能调用它运行时类型的方法。这时，我们就需要进行类型的强制转换，我们称为向下转型。
+3.在向下转型过程中，必须将引用变量转成真实的子类类型（运行时类型）否则会出现类型转换异常ClassCastException。
