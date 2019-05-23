@@ -1,0 +1,45 @@
+一、首先看一段代码及其运行结果
+public class TestString {
+	public static void main(String[] args){
+		String str1 = "test";
+		String str2 = "test";
+		String str3 = new String("test");
+		
+		System.out.println("使用==测试字符串是否相等");
+		System.out.println(str1 == str2);
+		System.out.println(str1 == str3);
+		
+		System.out.println(str2 == str3);
+		
+		System.out.println("使用equals测试字符串是否相等");
+		System.out.println(str1.equals(str2));
+		System.out.println(str1.equals(str3));
+		System.out.println(str2.equals(str3));
+	}
+}
+结果为:
+使用==测试字符串是否相等
+true
+false
+false
+使用equals测试字符串是否相等
+true
+true
+true
+可以看到使用两次运行结果是不同的。
+
+因为String是引用类型，所以==判断的是地址是否相等。因此可知str1和str2是同一个对象，而str3和str1与str2就不是同一个对象。查看String的equals方法源码可知，equlas判断的是字符串内容是否相等。所以str3与str1和str2就是内容完全相等的不同对象。
+
+为什么会发生上面这种情况，str3不是同一个对象，str1与str2为什么是同一个对象呢？这就是因为有Java内存池的存在。
+二、字符串常量池
+
+字符串常量池，在编译阶段就把所有的字符串文字放到一个常量池中。
+
+对于str1和str2来讲，他们都是一串字符串直接赋值，所以为了提高效率，Java直接将他们两个都指向常量池中的同一个引用。
+
+str3因为是通过new出来的，所以就创建了一个新的对象让str3来指向它。
+
+三、字符串常量池作用
+
+1.节省内存空间：常量池中所有相同的字符串常量被合并，只占用一个空间。
+2.节省运行时间：比较字符串时，==比equals()快。对于两个引用变量，只用==判断引用是否相等，也就可以判断实际值是否相等。
