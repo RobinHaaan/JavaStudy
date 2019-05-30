@@ -1,0 +1,59 @@
+一、首先我们看Integer包装类的自动装箱与拆箱
+
+//自动装箱，下面的代码与注释中的代码效果相同。
+Integer a = 123;
+//Integer a = Integer.valueOf(123);
+		
+//自动拆箱
+int b = a;
+//int b = a.intValue();
+
+为了方便Java程序员的使用在JDK1.5以后，Java提供了自动装箱功能，即当我们写下Integer a = 123;这样的代码时候，编译器自动帮我们执行Integer a = Integer.valueOf(123);这样的语句。自动拆箱也是如此。
+
+二、 Integer的缓存数组
+
+首先来看一段代码
+Integer in1 = 1234;
+Integer in2 = 1234;
+System.out.println(in1 == in2);
+System.out.println(in1.equals(in2));
+System.out.println("#############");
+ 
+Integer in3 = -128;
+Integer in4 = -128;
+System.out.println(in3 == in4);
+System.out.println(in3.equals(in4));
+System.out.println("#############");
+
+它的运行结果如下：
+false
+true
+#############
+true
+true
+#############
+
+为什么会发生这种情况呢？
+
+我们可以知道四个变量都是通过自动装箱所生成的，即就是通过Integer.valueOf();方法所生成，我们查看valueOf方法的实现。
+
+可以看到先进行了判断是否在IntegerCache类的low和high范围中。如果是的话就返回cache中的元素，否则就创建一个新的对象并返回出去。我们继续查看IntegerCache类的源码。
+
+因为此处太长，我们暂时查看我们需要关注的部分
+
+可以看到其中low和high分别为-128和127。而且已经存在了一个Integer的数组，这就是Integer的cache数组。
+
+所以我们就可以得到结果，如果使用Integer.valueOf();方法或使用自动装箱的方法，生成在-128和127之内的Integer对象就会直接使用Integer类内缓存的对象。这就是为什么in1和in2使用==比较地址，和使用equals方法比较值都是true的原因。
+
+最后，我们验证一下，当我们自己使用new生成对象和使用valueOf生成对象是否不同。
+
+Integer in5 = new Integer(127);
+Integer in6 = Integer.valueOf(127);
+System.out.println(in5 == in6);
+System.out.println(in5.equals(in6));
+System.out.println("#############");
+
+结果：
+false
+true
+#############
